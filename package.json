@@ -1,5 +1,5 @@
 {
-  "name": "html2pdf",
+  "name": "html2pdfjs",
   "version": "1.0.0",
   "description": "HTML to PDF Javascript Library",
   "main": "lib/html2pdf.js",
@@ -18,7 +18,8 @@
     "universal",
     "umd",
     "commonjs",
-    "html2pdf"
+    "html2pdf",
+    "html2pdfjs"
   ],
   "author": "Alfredo Irarrazaval",
   "license": "MIT",
