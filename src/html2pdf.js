@@ -292,31 +292,17 @@ class Html2Pdf {
     });
   }
 
-  download () {
+  getPdf (download) {
     return new Promise((resolve, reject) => {
       try {
         if (this._pdf) {
-          this._pdf.save(this.filename);
+          resolve(this._pdf);
         } else {
           this.make().then((pdf) => {
-            pdf.save(this.filename);
-          });
-        }
-        resolve(true);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  dataURI () {
-    return new Promise((resolve, reject) => {
-      try {
-        if (this._pdf) {
-          resolve(this._pdf.output('datauristring'));
-        } else {
-          this.make().then((pdf) => {
-            resolve(pdf.output('datauristring'));
+            if (download) {
+              pdf.save(this.filename);
+            }
+            resolve(pdf);
           });
         }
       } catch (error) {
@@ -325,12 +311,26 @@ class Html2Pdf {
     });
   }
 
-  static download (options) {
-    return (new Html2Pdf(null, options)).download();
+  getDataUri () {
+    return new Promise((resolve, reject) => {
+      try {
+        this.getPdf(false).then((pdf) => resolve(pdf.output('datauristring')));
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
-  static dataURI (options) {
-    return (new Html2Pdf(null, options)).dataURI();
+  static getPdf (options) {
+    return (new Html2Pdf(null, options)).getPdf(false);
+  }
+
+  static downloadPdf (options) {
+    return (new Html2Pdf(null, options)).getPdf(true);
+  }
+
+  static getDataUri (options) {
+    return (new Html2Pdf(null, options)).getDataUri();
   }
 }
 

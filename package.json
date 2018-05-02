@@ -1,6 +1,6 @@
 {
-  "name": "html2pdfjs",
-  "version": "1.0.0",
+  "name": "js-html2pdf",
+  "version": "1.1.0",
   "description": "HTML to PDF Javascript Library",
   "main": "lib/html2pdf.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "html2pdf",
     "html2pdfjs"
   ],
-  "author": "Alfredo Irarrazaval",
+  "author": "Alfredo Irarrazaval <alfredo.irarrazaval@fao.org>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/airarrazaval/html2pdf/issues"
