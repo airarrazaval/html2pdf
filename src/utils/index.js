@@ -22,7 +22,7 @@ export default class Html2PdfUtils {
       args = args.slice(1);
     }
     // check if HTML style is defined as object
-    if (attributes.hasOwnProperty('style') && attributes.style.constructor === Object) {
+    if (!!attributes.style && typeof attributes.style === 'object') {
       // transform the style object into string
       attributes.style = Object.keys(attributes.style).map((key) => {
         return `${key}:${attributes.style[key]}`;
@@ -44,9 +44,10 @@ export default class Html2PdfUtils {
       });
     }
 
-    for (let key in attributes) {
+    Array.prototype.forEach.call(Object.keys(attributes), (key) => {
       el.setAttribute(key, attributes[key]);
-    }
+    });
+
     // return the created HTML element
     return el;
   }
