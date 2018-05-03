@@ -29,6 +29,7 @@ class Html2Pdf {
     this.links = [];
     this._pdf = null;
     this.javascriptEnabled = false;
+    this.onRendered = () => {};
 
     if (!!options.jsPDF && typeof options.jsPDF === 'object') {
       this.jsPDF = options.jsPDF;
@@ -38,6 +39,10 @@ class Html2Pdf {
 
     if (!!options.html2canvas && typeof options.html2canvas === 'object') {
       this.html2canvas = options.html2canvas;
+      if (this.html2canvas.hasOwnProperty('onrendered')) {
+        this.onRendered = this.html2canvas.onrendered;
+        delete this.html2canvas.onrendered;
+      }
     } else if (Html2Pdf.html2canvas) {
       this.html2canvas = Html2Pdf.html2canvas;
     }
@@ -188,7 +193,7 @@ class Html2Pdf {
 
         html2canvas(container, this.html2canvas).then((canvas) => {
           if (typeof this.html2canvas.onrendered === 'function') {
-            this.html2canvas.onrendered(canvas);
+            this.onRendered(canvas);
           }
           document.body.removeChild(overlay);
           resolve(canvas);
