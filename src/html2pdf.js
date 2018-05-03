@@ -192,9 +192,7 @@ class Html2Pdf {
         }
 
         html2canvas(container, this.html2canvas).then((canvas) => {
-          if (typeof this.html2canvas.onrendered === 'function') {
-            this.onRendered(canvas);
-          }
+          this.onRendered(canvas);
           document.body.removeChild(overlay);
           resolve(canvas);
         });
