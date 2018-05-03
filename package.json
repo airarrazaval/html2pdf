@@ -1,6 +1,6 @@
 {
   "name": "js-html2pdf",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "HTML to PDF Javascript Library",
   "main": "lib/html2pdf.js",
   "scripts": {
