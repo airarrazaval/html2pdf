@@ -322,7 +322,7 @@ class Html2Pdf {
   }
 
   static getPdf (options) {
-    return (new Html2Pdf(null, options)).getPdf(false);
+    return (new Html2Pdf(null, options)).getPdf(options.download);
   }
 
   static downloadPdf (options) {
