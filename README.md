@@ -26,9 +26,30 @@ Once installed, html2pdf is ready to use. The following command will generate a 
 
 ```js
 var element = document.getElementById('element-to-print');
-html2pdf(element).getPdf().then((pdf) => {
+
+// Download the file
+html2pdf(element).getPdf(true);
+
+// Or get the jsPDF object and do something with it before downloading
+html2pdf(element).getPdf(false).then((pdf) => {
+  // do something...
   pdf.save('file.pdf');
 });
+```
+
+or using the NPM package
+
+```js
+// Import the library
+import Html2Pdf from 'js-html2pdf';
+
+let options = {
+  source: document.getelementById('element-to-print'),
+  download: true
+};
+
+// Download the pdf file
+Html2Pdf.getPdf(options);
 ```
 
 ## Options
@@ -50,6 +71,7 @@ The `opt` parameter has the following optional fields:
 
 |Name        |Type            |Default                       |Description                                                                                                 |
 |------------|----------------|------------------------------|------------------------------------------------------------------------------------------------------------|
+|source      |Element         |undefined                     |The HTML element to export to PDF (required when using static methods). |
 |margin      |number or array |[10, 10, 10, 10]                             |PDF margin (in jsPDF units). Can be a single number, `[vMargin, hMargin]`, or `[top, left, bottom, right]`. |
 |filename    |string          |'file.pdf'                                   |The default filename of the exported PDF.                                                                   |
 |image       |object          |{type: 'jpeg', quality: 0.95}                |The image type and quality used to generate the PDF. See the Extra Features section below.                  |
