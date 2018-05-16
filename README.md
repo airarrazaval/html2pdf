@@ -1,5 +1,7 @@
 # html2pdf
 
+[Live Demo](https://js-html2pdf.stackblitz.io/)
+
 Based on [eKoopmans/html2pdf](https://github.com/eKoopmans/html2pdf)
 
 html2pdf converts any webpage or element into a printable PDF entirely client-side using [html2canvas](https://github.com/niklasvh/html2canvas) and [jsPDF](https://github.com/MrRio/jsPDF).
@@ -22,44 +24,57 @@ Install html2pdf and its dependencies using NPM with `npm install --save js-html
 
 ## Usage
 
-Once installed, html2pdf is ready to use. The following command will generate a PDF of `#element-to-print` and prompt the user to save the result:
+Once installed, html2pdf is ready to use. You can create an instance of the html2pdf class or just use its static methods for one time use:
 
 ```js
+// Get the element to print
 var element = document.getElementById('element-to-print');
 
-// Download the file
-html2pdf(element).getPdf(true);
+// Define optional configuration
+var options = {
+  filename: 'my-file.pdf'
+};
 
-// Or get the jsPDF object and do something with it before downloading
-html2pdf(element).getPdf(false).then((pdf) => {
-  // do something...
-  pdf.save('file.pdf');
+// Create instance of html2pdf class
+var exporter = new html2pdf(element, options);
+
+// Download the PDF or...
+exporter.getPdf(true).then((pdf) => {
+  console.log('pdf file downloaded');
 });
+
+// Get the jsPDF object to work with it
+exporter.getPdf(false).then((pdf) => {
+  console.log('doing something before downloading pdf file');
+  pdf.save();
+});
+
+// You can also use static methods for one time use...
+options.source = element;
+options.download = true;
+html2pdf.getPdf(options);
 ```
 
-or using the NPM package
+The same goes when installing it through NPM
 
 ```js
 // Import the library
 import Html2Pdf from 'js-html2pdf';
 
-let options = {
-  source: document.getelementById('element-to-print'),
-  download: true
-};
+var exporter = new Html2Pdf(element, options);
 
-// Download the pdf file
 Html2Pdf.getPdf(options);
 ```
 
 ## Options
 
-html2pdf can be configured using an optional `opt` parameter:
+html2pdf can be configured using an optional `options` parameter:
 
 ```js
 var element = document.getElementById('element-to-print');
+
 html2pdf(element, {
-  margin:       1,
+  margin:       10,
   filename:     'myfile.pdf',
   image:        { type: 'jpeg', quality: 0.98 },
   html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true },
@@ -67,7 +82,7 @@ html2pdf(element, {
 });
 ```
 
-The `opt` parameter has the following optional fields:
+The `options` parameter has the following optional fields:
 
 |Name        |Type            |Default                       |Description                                                                                                 |
 |------------|----------------|------------------------------|------------------------------------------------------------------------------------------------------------|
